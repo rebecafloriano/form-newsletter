@@ -24,15 +24,15 @@ Follow these steps to run the project locally on your machine:
 1. **Clone the repository:**
    ```bash
    git clone [https://github.com/rebecafloriano/form-newsletter.git](https://github.com/rebecafloriano/form-newsletter.git)
+
 2. Navigate to the project folder:
-  cd form-newsletter
+  ```cd form-newsletter
 3. **Install the dependencies:**
-  `npm install`
+  ```npm install
 4. **Start the development server:**
-  ```bash
-   npm run dev
+  ```npm run dev
 5. **Access the application:**
-  Open your browser and go to http://localhost:5173
+  ```Open your browser and go to http://localhost:5173
 
 ## 📂 Project Structure
 *   `src/components/ui`: Atomic UI components (Input, Button, Checkbox).
