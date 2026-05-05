@@ -1,7 +1,7 @@
 # 📧 Modern Newsletter Subscription Form
 
 A professional, accessible, and responsive newsletter subscription form built with **React**, **TypeScript**, and **Tailwind CSS**.
-![Project Screenshot](./assets/screenshot.png)
+![Project Screenshot](./src/assets/screenshot.png)
 
 > 🚀 **Live Demo:** [https://rebecafloriano.github.io/form-newsletter/](https://rebecafloriano.github.io/form-newsletter/)
 
