@@ -120,7 +120,7 @@ const Form = () => {
                     label='Concordo com os termos'
                     checked={agree}
                     onChange={(e) => setAgree(e.target.checked)}
-                    error={errors?.agree}
+                    error={errors?.agree? String(errors.agree) : undefined}
                 />
 
             </div>
