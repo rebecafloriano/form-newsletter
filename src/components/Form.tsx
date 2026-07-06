@@ -40,26 +40,39 @@ const Form = () => {
         // API
         setIsLoading(true)
         try {
-            // Simulando uma chamada de API (POST) para o site httpbin
-            const response = await fetch('https://httpbin.org/post', {
-                method: 'POST',
-                body: JSON.stringify(data),
-            })
+            setIsLoading(true);
+            setApiError(null);
 
-            // Caso 1: O servidor respondeu, mas com erro (ex: 404, 500)
-            if (!response.ok) {
-                setApiError(`Erro do servidor: Código ${response.status}`);
-                return;
+           
+            const formData = {
+                access_key: "f12668c6-2429-498e-aebd-bc8bdb70338c",
+                name: data.name,
+                email: data.email,
+                subject: "Nova Subscrição na Newsletter"
+            };
+
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const result = await response.json();
+
+          
+            if (result.success) {
+                setIsSuccess(true);
+            } else {
+                setApiError(result.message || "Erro ao submeter o formulário.");
             }
 
-            // Caso de Sucesso
-            setIsSuccess(true);
-
         } catch (error) {
-            // Caso 2: O fetch falhou totalmente (Internet caiu, URL errada, etc)
-            setApiError("Falha na rede. Não foi possível contatar o servidor.");
+            setApiError("Falha na rede. Não foi possível conectar ao servidor.");
         } finally {
-            setIsLoading(false)
+            setIsLoading(false);
         }
 
     }
