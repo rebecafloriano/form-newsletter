@@ -100,6 +100,7 @@ const Form = () => {
             </div>
         )
     }
+    const isFormInvalid = !name.trim() || !email.trim() || !agree;
 
     return (
         <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
@@ -144,7 +145,7 @@ const Form = () => {
             )}
             <Button
                 type='submit'
-                disabled={isLoading}
+                disabled={isLoading || isFormInvalid}
             >
                 {isLoading ? "Enviando..." : "Cadastrar"}
             </Button>
