@@ -127,7 +127,7 @@ const Form = () => {
             />
 
             <div className="flex flex-col gap-2 py-2">
-                <a className="text-xs underline text-blue-600 hover:text-blue-800" href="#">Leia os termos</a>
+                <a className="text-xs underline text-blue-800 hover:text-blue-950" href="#">Leia os termos</a>
 
                 <Checkbox
                     id='agree'

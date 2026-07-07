@@ -9,14 +9,14 @@ export const validate = (data: User) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+(\.[^\s@]+)*$/
 
 
-    if (!data.name) {
+    if (!data.name?.trim()) {
         errors["name"] = "O nome é obrigatório!"
-    } else if (data.name.length < 3) {
+    } else if (data.name.trim().length < 3) {
         errors["name"] = "O nome deve ter pelo menos 3 caracteres!"
     }
 
   
-    if (!data.email) {
+    if (!data.email?.trim()) {
         errors["email"] = "O email é obrigatório!"
     } else if (!emailRegex.test(data.email)) {
         errors["email"] = "Formato de e-mail inválido!"
