@@ -13,19 +13,33 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout Repository
         uses: actions/checkout@v4
-      - name: Set up Node
+
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: 20 # 💡 Mudado para a versão LTS estável
           cache: 'npm'
-      - name: Install dependencies
-        run: npm install
-      - name: Build
+
+      - name: Install Dependencies
+        run: npm ci # 💡 Instalação limpa e segura para CI
+
+      - name: Check Formatting (Prettier)
+        run: npm run format:check # 💡 Garante que o código está bonito
+
+      - name: Run Linter (ESLint)
+        run: npm run lint # 💡 Garante que não há variáveis soltas ou bugs
+
+      - name: Run Automated Tests
+        run: npm run test # 💡 Garante que os teus 15 testes estão a passar
+
+      - name: Build Application
         run: npm run build
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

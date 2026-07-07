@@ -1,131 +1,141 @@
-import { fireEvent, render, screen } from '@testing-library/react'
-import { describe, it, expect, vi } from 'vitest'
-import Form from './Form'
+import { fireEvent, render, screen } from "@testing-library/react";
+import { describe, it, expect, vi } from "vitest";
+import Form from "./Form";
 
-describe('Teste Renderização', () => {
+describe("Teste Renderização", () => {
+  it("Deve renderizar os subcomponentes input, checkbox e button corretamente", () => {
+    render(<Form />);
 
-    it('Deve renderizar os subcomponentes input, checkbox e button corretamente', () => {
-        render(<Form />)
+    const nameInputElement = screen.getByPlaceholderText(/Escreva seu nome/i);
+    const emailInputElement =
+      screen.getByPlaceholderText(/exemplo@exemplo.com/i);
+    const termosCheckboxElement = screen.getByLabelText(
+      /Concordo com os termos/i,
+    );
+    const buttonElement = screen.getByRole("button");
 
-        const nameInputElement = screen.getByPlaceholderText(/Escreva seu nome/i)
-        const emailInputElement = screen.getByPlaceholderText(/exemplo@exemplo.com/i)
-        const termosCheckboxElement = screen.getByLabelText(/Concordo com os termos/i)
-        const buttonElement = screen.getByRole('button')
+    expect(nameInputElement).toBeInTheDocument();
+    expect(emailInputElement).toBeInTheDocument();
+    expect(termosCheckboxElement).toBeInTheDocument();
+    expect(buttonElement).toBeInTheDocument();
+  });
+});
 
-        expect(nameInputElement).toBeInTheDocument()
-        expect(emailInputElement).toBeInTheDocument()
-        expect(termosCheckboxElement).toBeInTheDocument()
-        expect(buttonElement).toBeInTheDocument()
-    })
-})
+describe("Validação dos campos e botao", () => {
+  it("Botão enviar deve estar bloqueado caso os campos estão em branco", () => {
+    render(<Form />);
+    const buttonElement = screen.getByRole("button");
+    expect(buttonElement).toBeDisabled();
+  });
 
-describe('Validação dos campos e botao', () => {
+  it("Falta email e os termos, apenas nome preenchido", () => {
+    render(<Form />);
 
-    it('Botão enviar deve estar bloqueado caso os campos estão em branco', () => {
-        render(<Form />)
-        const buttonElement = screen.getByRole('button')
-        expect(buttonElement).toBeDisabled()
-    })
+    const nameInputElement = screen.getByPlaceholderText(/Escreva seu nome/i);
 
-    it('Falta email e os termos, apenas nome preenchido', () => {
-        render(<Form />)
+    const buttonElement = screen.getByRole("button");
+    fireEvent.change(nameInputElement, { target: { value: "Rebeca" } });
 
-        const nameInputElement = screen.getByPlaceholderText(/Escreva seu nome/i)
+    expect(buttonElement).toBeDisabled();
+  });
 
-        const buttonElement = screen.getByRole('button')
-        fireEvent.change(nameInputElement, { target: { value: 'Rebeca' } })
+  it("Falta aceitar os termos. Nome e email preenchidos", () => {
+    render(<Form />);
 
-        expect(buttonElement).toBeDisabled()
+    const nameInputElement = screen.getByPlaceholderText(/Escreva seu nome/i);
+    const emailInputElement =
+      screen.getByPlaceholderText(/exemplo@exemplo.com/i);
+    const buttonElement = screen.getByRole("button");
 
-    })
+    fireEvent.change(nameInputElement, { target: { value: "Rebeca" } });
+    fireEvent.change(emailInputElement, {
+      target: { value: "rebeca@gmail.com" },
+    });
 
-    it('Falta aceitar os termos. Nome e email preenchidos', () => {
-        render(<Form />)
+    expect(buttonElement).toBeDisabled();
+  });
 
-        const nameInputElement = screen.getByPlaceholderText(/Escreva seu nome/i)
-        const emailInputElement = screen.getByPlaceholderText(/exemplo@exemplo.com/i)
-        const buttonElement = screen.getByRole('button')
+  it("Tudo preenchido, o botao deve ficar disponível", () => {
+    render(<Form />);
 
-        fireEvent.change(nameInputElement, { target: { value: 'Rebeca' } })
-        fireEvent.change(emailInputElement, { target: { value: 'rebeca@gmail.com' } })
+    const nameInputElement = screen.getByPlaceholderText(/Escreva seu nome/i);
+    const emailInputElement =
+      screen.getByPlaceholderText(/exemplo@exemplo.com/i);
+    const termosCheckboxElement = screen.getByLabelText(
+      /Concordo com os termos/i,
+    );
+    const buttonElement = screen.getByRole("button");
 
-        expect(buttonElement).toBeDisabled()
-    })
+    fireEvent.change(nameInputElement, { target: { value: "Rebeca" } });
+    fireEvent.change(emailInputElement, {
+      target: { value: "rebeca@gmail.com" },
+    });
+    fireEvent.click(termosCheckboxElement);
 
-    it('Tudo preenchido, o botao deve ficar disponível', () => {
-        render(<Form />)
+    expect(buttonElement).not.toBeDisabled();
+  });
+});
 
-        const nameInputElement = screen.getByPlaceholderText(/Escreva seu nome/i)
-        const emailInputElement = screen.getByPlaceholderText(/exemplo@exemplo.com/i)
-        const termosCheckboxElement = screen.getByLabelText(/Concordo com os termos/i)
-        const buttonElement = screen.getByRole('button')
+describe("Fluxo de Sucesso com API", () => {
+  it("Deve mostrar mensagem de sucesso ao submeter com dados válido", async () => {
+    //fetch falso
+    globalThis.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ success: true }),
+    });
 
-        fireEvent.change(nameInputElement, { target: { value: 'Rebeca' } })
-        fireEvent.change(emailInputElement, { target: { value: 'rebeca@gmail.com' } })
-        fireEvent.click(termosCheckboxElement)
+    render(<Form />);
 
-        expect(buttonElement).not.toBeDisabled()
-    })
+    const nameInputElement = screen.getByPlaceholderText(/Escreva seu nome/i);
+    const emailInputElement =
+      screen.getByPlaceholderText(/exemplo@exemplo.com/i);
+    const termosCheckboxElement = screen.getByLabelText(
+      /Concordo com os termos/i,
+    );
+    const buttonElement = screen.getByRole("button");
 
-    
-})
+    fireEvent.change(nameInputElement, { target: { value: "Rebeca" } });
+    fireEvent.change(emailInputElement, {
+      target: { value: "rebeca@gmail.com" },
+    });
+    fireEvent.click(termosCheckboxElement);
 
-describe('Fluxo de Sucesso com API', () => {
+    fireEvent.click(buttonElement);
 
-    it('Deve mostrar mensagem de sucesso ao submeter com dados válido', async () => {
+    const successMessage = await screen.findByText(/sucesso/i);
+    expect(successMessage).toBeInTheDocument();
 
-        //fetch falso
-        globalThis.fetch = vi.fn().mockResolvedValue({
-            ok: true,
-            json: async () => ({ success: true }),
-        })
+    const personalizedMessage = screen.getByText(
+      /Rebeca, seu cadastro foi realizado com êxito/i,
+    );
+    expect(personalizedMessage).toBeInTheDocument();
+  });
+});
 
-        render(<Form />)
+describe("Fluxo de Erro com API", () => {
+  it("Deve mostrar mensagem de erro se a requisição da API falhar", async () => {
+    globalThis.fetch = vi.fn().mockRejectedValue(new Error("Network Error"));
 
-        const nameInputElement = screen.getByPlaceholderText(/Escreva seu nome/i)
-        const emailInputElement = screen.getByPlaceholderText(/exemplo@exemplo.com/i)
-        const termosCheckboxElement = screen.getByLabelText(/Concordo com os termos/i)
-        const buttonElement = screen.getByRole('button')
+    render(<Form />);
 
-        fireEvent.change(nameInputElement, { target: { value: 'Rebeca' } })
-        fireEvent.change(emailInputElement, { target: { value: 'rebeca@gmail.com' } })
-        fireEvent.click(termosCheckboxElement)
+    const nameInputElement = screen.getByPlaceholderText(/Escreva seu nome/i);
+    const emailInputElement =
+      screen.getByPlaceholderText(/exemplo@exemplo.com/i);
+    const termosCheckboxElement = screen.getByLabelText(
+      /Concordo com os termos/i,
+    );
+    const buttonElement = screen.getByRole("button");
 
-        fireEvent.click(buttonElement)
+    fireEvent.change(nameInputElement, { target: { value: "Rebeca" } });
+    fireEvent.change(emailInputElement, {
+      target: { value: "rebeca@gmail.com" },
+    });
+    fireEvent.click(termosCheckboxElement);
 
-        const successMessage = await screen.findByText(/sucesso/i)
-        expect(successMessage).toBeInTheDocument()
+    fireEvent.click(buttonElement);
 
-        const personalizedMessage = screen.getByText(/Rebeca, seu cadastro foi realizado com êxito/i)
-        expect(personalizedMessage).toBeInTheDocument()
+    const errorMessage = await screen.findByText(/falha na rede/i);
 
-
-    })
-
-})
-
-describe('Fluxo de Erro com API', () => {
-
-    it('Deve mostrar mensagem de erro se a requisição da API falhar', async () => {
-
-        globalThis.fetch = vi.fn().mockRejectedValue(new Error('Network Error'))
-
-        render(<Form />)
-        
-        const nameInputElement = screen.getByPlaceholderText(/Escreva seu nome/i)
-        const emailInputElement = screen.getByPlaceholderText(/exemplo@exemplo.com/i)
-        const termosCheckboxElement = screen.getByLabelText(/Concordo com os termos/i)
-        const buttonElement = screen.getByRole('button')
-
-        fireEvent.change(nameInputElement, { target: { value: 'Rebeca' } })
-        fireEvent.change(emailInputElement, { target: { value: 'rebeca@gmail.com' } })
-        fireEvent.click(termosCheckboxElement)
-
-        fireEvent.click(buttonElement)
-
-        const errorMessage = await screen.findByText(/falha na rede/i)
-
-        expect(errorMessage).toBeInTheDocument()
-    })
-})
-
+    expect(errorMessage).toBeInTheDocument();
+  });
+});

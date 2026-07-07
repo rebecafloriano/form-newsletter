@@ -3,13 +3,11 @@ import { type InputHTMLAttributes } from "react";
 interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   error?: string;
-
 }
-
 
 export const Checkbox = ({ label, error, id, ...props }: CheckboxProps) => {
   return (
-    <div className='flex flex-col gap-2'>
+    <div className="flex flex-col gap-2">
       <div>
         <input
           id={id}
@@ -17,20 +15,14 @@ export const Checkbox = ({ label, error, id, ...props }: CheckboxProps) => {
           type="checkbox"
           {...props}
         />
-        <label
-          className={`text-sm cursor-pointer ml-1`}
-          htmlFor={id}
-        >
+        <label className={`text-sm cursor-pointer ml-1`} htmlFor={id}>
           {label}
         </label>
       </div>
 
       <div>
-        {error && (
-          <small className='text-sm text-red-500'>{error}</small>
-        )}
+        {error && <small className="text-sm text-red-500">{error}</small>}
       </div>
     </div>
-  )
-}
-
+  );
+};
