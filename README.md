@@ -4,7 +4,7 @@ A professional, highly accessible, and strictly tested newsletter subscription f
 
 [![CI Pipeline](https://github.com/rebecafloriano/form-newsletter/actions/workflows/main.yml/badge.svg)](https://github.com/rebecafloriano/form-newsletter/actions/workflows/main.yml)
 ![Acessibilidade](https://img.shields.io/badge/axe__DevTools-0__issues-brightgreen)
-![Tests](https://img.shields.io/badge/Vitest-15__passed-brightgreen)
+![Tests](https://img.shields.io/badge/Vitest-20__passed-brightgreen)
 
 ![Project Screenshot](./src/assets/screenshot.png)
 
@@ -15,9 +15,9 @@ A professional, highly accessible, and strictly tested newsletter subscription f
 ## ✨ Key Features
 
 - **Production-Ready Architecture** Separation of concerns between UI atomic elements, business logic layer (`validate.ts`), and strict TypeScript typing.
-- **Robust Automated Testing Suite** 15 comprehensive unit and integration tests tracking DOM rendering, asynchronous state shifts (loading, success, error), and edge-case form logic.
+- **Robust Automated Testing Suite** 20 comprehensive unit and integration tests tracking DOM rendering, asynchronous state shifts (loading, success, error), and edge-case form logic.
 - **Strict Linting & Code Formatting** Zero-warning code baseline enforced locally and on remote environments via ESLint and Prettier formatting pipelines.
-- **Strict Accessibility Compliance (WCAG 2.1 AA)** Audited with `axe DevTools` ensuring a flawless **0 issues** score, utilizing semantic layout landmarks (`<form>`, labels) and high color contrast thresholds.
+- **Strict Accessibility Compliance (WCAG 2.1 AA)** Audited with `axe DevTools` ensuring a flawless **0 issues** score, utilizing semantic layout landmarks (`<form>`, labels), strict color contrast thresholds (minimum 4.5:1 ratio), and explicit screen-reader feedback loops.
 - **API Integration & Validation Trimming** Full input string trimming defense to filter out malicious whitespace inputs before safe payload delivery via Web3Forms.
 
 ---
@@ -58,20 +58,23 @@ npm run dev
 npm run build    
   ```
 
-### 3. Quality Assurance Pipeline (Local CI Checking)
- ```bash
-# 🧪 Run the full automated testing suite (15 tests)
+### 3. Quality Assurance Pipeline (Local Validation)
+```bash
+# 🧪 Run the full automated testing suite (20 tests)
 npm run test
 
-# 🎨 Check code formatting rules via Prettier
-npm run format:check
+# 🎨 Automatically format all code files via Prettier
+npm run format
 
-# 🪛 Automatically fix code styling and alignment issues
-npm run format:fix
-
-# 🔍 Run static analysis to catch syntax warnings and hidden bugs
+# 🔍 Run static analysis to catch syntax warnings, type safety, and bugs
 npm run lint    
   ```
+### 📊 Test Coverage Highlights
+The **20-test suite** extensively covers:
+- **E2E Component Integration:** Complete customer journey simulating full form submission, success screen transitions, and immediate accessibility feedback loops.
+- **API Boundary Testing:** Network errors (`Network Error`) and successful handshakes handled safely via isolated `vi.spyOn` and `beforeEach` lifecycles.
+- **DOM Leaks Prevention:** Strict usage of `queryBy*` query selectors ensuring precise element removal from the screen without false positives.
+- 
 ## 🤖 Continuous Integration (CI/CD)
 This repository enforces a strict GitHub Actions Pipeline (`main.yml`) on every push and pull request to the `main` branch. The automated workflow guarantees the stability of the live application by executing:
 
