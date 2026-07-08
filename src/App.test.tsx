@@ -18,7 +18,7 @@ describe("Teste de renderização App", () => {
     const aviso = screen.getByText(/Ao se inscrever/i);
     expect(aviso).toBeInTheDocument();
 
-    const formButton = screen.getByRole("button");
+    const formButton = screen.getByRole("button", { name: /cadastrar/i });
     expect(formButton).toBeInTheDocument();
 
     const inputName = screen.getByPlaceholderText(/Escreva seu nome/i);
