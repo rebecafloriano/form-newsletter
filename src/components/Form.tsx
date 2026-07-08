@@ -233,7 +233,7 @@ const Form = () => {
         {!showFooterFeedback ? (
           <button
             onClick={() => setShowFooterFeedback(true)}
-            className="text-xs text-gray-500 hover:text-gray-700 underline focus:outline-none focus:ring-1 focus:ring-gray-400 p-1 rounded"
+            className="text-xs text-gray-700 hover:text-gray-900 underline focus:outline-none focus:ring-1 focus:ring-gray-400 p-1 rounded"
           >
             Encontrou algum problema ou barreira de acessibilidade? Clique aqui.
           </button>
