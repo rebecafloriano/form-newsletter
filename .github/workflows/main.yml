@@ -9,6 +9,10 @@ permissions:
   pages: write
   id-token: write
 
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -32,7 +36,7 @@ jobs:
         run: npm run lint # 💡 Garante que não há variáveis soltas ou bugs
 
       - name: Run Automated Tests
-        run: npm run test # 💡 Garante que os teus 15 testes estão a passar
+        run: npm run test # 💡 Garante que os teus 20 testes estão a passar
 
       - name: Build Application
         run: npm run build
