@@ -71,7 +71,7 @@ npm run lint
   ```
 ### 📊 Test Coverage Highlights
 The **20-test suite** extensively covers:
-- **E2E Component Integration:** Complete customer journey simulating full form submission, success screen transitions, and immediate accessibility feedback loops.
+- **Full User Journey Integration:** Complete customer journey simulating full form submission, success screen transitions, and immediate accessibility feedback loops.
 - **API Boundary Testing:** Network errors (`Network Error`) and successful handshakes handled safely via isolated `vi.spyOn` and `beforeEach` lifecycles.
 - **DOM Leaks Prevention:** Strict usage of `queryBy*` query selectors ensuring precise element removal from the screen without false positives.
 - 
