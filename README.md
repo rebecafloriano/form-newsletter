@@ -4,7 +4,8 @@ A professional, highly accessible, and strictly tested newsletter subscription f
 
 [![CI Pipeline](https://github.com/rebecafloriano/form-newsletter/actions/workflows/main.yml/badge.svg)](https://github.com/rebecafloriano/form-newsletter/actions/workflows/main.yml)
 ![Acessibilidade](https://img.shields.io/badge/axe__DevTools-0__issues-brightgreen)
-![Tests](https://img.shields.io/badge/Vitest-20__passed-brightgreen)
+![Vitest Tests](https://img.shields.io/badge/Vitest-20__passed-brightgreen)
+![Playwright Tests](https://img.shields.io/badge/Playwright-15__passed-blue)
 
 ![Project Screenshot](./src/assets/screenshot.png)
 
@@ -29,6 +30,7 @@ A professional, highly accessible, and strictly tested newsletter subscription f
 - **Tailwind CSS**
 - **Vite**
 - **Vitest** & **React Testing Library** (Test Environment)
+- **Playwright** (End-to-End Multi-browser testing)
 - **ESLint** & **Prettier** (Code Quality)
 
 ---
@@ -47,6 +49,9 @@ Follow these steps to spin up the environment and run the full engineering pipel
 
     # Perform a clean dependency installation
     npm install
+
+    # Install Playwright browsers (needed for E2E tests)
+    npx playwright install
 ```
 
 ### 2. Development & Build Scripts
@@ -69,12 +74,38 @@ npm run format
 # 🔍 Run static analysis to catch syntax warnings, type safety, and bugs
 npm run lint    
   ```
-### 📊 Test Coverage Highlights
+## 🧪 Automated Testing Strategy
+
+This project combines two different testing methodologies to ensure absolute resilience:
+
+### A. Unit & Integration Testing (Vitest & React Testing Library)
 The **20-test suite** extensively covers:
-- **Full User Journey Integration:** Complete customer journey simulating full form submission, success screen transitions, and immediate accessibility feedback loops.
-- **API Boundary Testing:** Network errors (`Network Error`) and successful handshakes handled safely via isolated `vi.spyOn` and `beforeEach` lifecycles.
-- **DOM Leaks Prevention:** Strict usage of `queryBy*` query selectors ensuring precise element removal from the screen without false positives.
-- 
+* **Full User Journey Integration:** Complete customer journey simulating full form submission, success screen transitions, and immediate accessibility feedback loops.
+* **API Boundary Testing:** Network errors (`Network Error`) and successful handshakes handled safely via isolated `vi.spyOn` and `beforeEach` lifecycles.
+* **DOM Leaks Prevention:** Strict usage of `queryBy*` query selectors ensuring precise element removal from the screen without false positives.
+
+### B. End-to-End (E2E) Testing (Playwright)
+A **15-test suite** running concurrently across the three major browser engines: **Chromium** (Chrome/Edge), **Firefox**, and **WebKit** (Safari).
+* **Multi-Browser Consistency:** Verifies UX responsiveness and interaction performance across different platforms.
+* **HTML5 Validation:** Asserts the browser's native behavior (`checkValidity`) for malformed emails.
+* **Advanced Network Mocking:** Intercepts outgoing requests to `api.web3forms.com` to test simulated Server Errors (Status 500) and mock success handshakes without consuming actual API submission credits.
+* **Interactive UI Flows:** Tests the dynamic accessibility footer form, guaranteeing that state toggles, textarea inputs, and cancellation actions function correctly.
+
+To run the E2E suite:
+```bash
+# Ensure your local server is running (npm run dev) before triggering E2E tests
+npm run dev
+
+# Run all 15 tests in headless mode (background)
+npx playwright test
+
+# Launch Playwright UI mode for interactive debugging and visual inspection
+npx playwright test --ui
+
+# Open the comprehensive HTML test report
+npx playwright show-report
+```
+
 ## 🤖 Continuous Integration (CI/CD)
 This repository enforces a strict GitHub Actions Pipeline (`main.yml`) on every push and pull request to the `main` branch. The automated workflow guarantees the stability of the live application by executing:
 
@@ -99,3 +130,4 @@ src/
 ├── utils/           # Pure, decoupled business rules and validations
 ├── App.tsx          # Application root view wrapper
 └── setupTests.ts    # Extended Jest-DOM matching extensions for Vitest
+tests/               # Playwright End-to-End (E2E) test specifications
