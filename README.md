@@ -20,6 +20,7 @@ A professional, highly accessible, and strictly tested newsletter subscription f
 - **Strict Linting & Code Formatting** Zero-warning code baseline enforced locally and on remote environments via ESLint and Prettier formatting pipelines.
 - **Strict Accessibility Compliance (WCAG 2.1 AA)** Audited with `axe DevTools` ensuring a flawless **0 issues** score, utilizing semantic layout landmarks (`<form>`, labels), strict color contrast thresholds (minimum 4.5:1 ratio), and explicit screen-reader feedback loops.
 - **API Integration & Validation Trimming** Full input string trimming defense to filter out malicious whitespace inputs before safe payload delivery via Web3Forms.
+- **User Feedback Loop for Continuous Improvement:** Features a dedicated, dynamic accessibility and bug-reporting form in the footer, creating a direct communication channel for users to report technical barriers or usability issues.
 
 ---
 
