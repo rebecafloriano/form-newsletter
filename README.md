@@ -7,7 +7,7 @@ A professional, highly accessible, and strictly tested newsletter subscription f
 ![Vitest Tests](https://img.shields.io/badge/Vitest-20__passed-brightgreen)
 ![Playwright Tests](https://img.shields.io/badge/Playwright-15__passed-blue)
 
-![Project Screenshot](./src/assets/screenshot.png)
+![Project Screenshot](./src/assets/screen-v2.png)
 
 > 🚀 **Live Demo:** > https://rebecafloriano.github.io/form-newsletter/
 
